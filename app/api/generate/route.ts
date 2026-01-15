@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { extractImageFromContent } from '@/lib/imageUtils'
+import { extractImageFromResponse } from '@/lib/imageUtils'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
@@ -130,13 +130,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Extract image URL or base64 data from response
-    const generatedImageUrl = extractImageFromContent(responseMessage.content)
+    // Extract image URL or base64 data from response using unified function
+    const responseData = {
+      message: responseMessage,
+      images: responseMessage.images,
+      content: responseMessage.content,
+    }
+    const generatedImageUrl = extractImageFromResponse(responseData)
+
+    console.log('Image extraction result:', {
+      hasImageUrl: !!generatedImageUrl,
+      imageUrlLength: generatedImageUrl?.length || 0,
+      hasImagesArray: !!responseMessage.images,
+      imagesArrayLength: responseMessage.images?.length || 0,
+    })
 
     return NextResponse.json({
       success: true,
       message: responseMessage,
       imageUrl: generatedImageUrl,
+      images: responseMessage.images,
       content: responseMessage.content,
     })
   } catch (error: any) {

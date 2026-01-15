@@ -5,7 +5,7 @@ import { FiUpload, FiX, FiZap, FiLoader } from 'react-icons/fi'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useImageUpload } from '@/hooks/useImageUpload'
-import { extractImageFromContent } from '@/lib/imageUtils'
+import { extractImageFromResponse } from '@/lib/imageUtils'
 
 interface GeneratedImage {
   id: string
@@ -66,9 +66,8 @@ export default function EditorPage() {
         throw new Error(data.error || 'Failed to generate image')
       }
 
-      // Handle the response - Gemini 2.5 Flash Image might return text with image URLs
-      // or the response might contain the generated image data (base64 or URL)
-      const imageUrl = data.imageUrl || extractImageFromContent(data.content)
+      // Handle the response - use unified extraction function to check all possible locations
+      const imageUrl = extractImageFromResponse(data)
 
       if (imageUrl) {
         const newImage: GeneratedImage = {
