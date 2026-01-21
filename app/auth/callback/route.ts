@@ -1,25 +1,21 @@
 import { createClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
+import { getOriginFromRequest } from '@/utils/url'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
-  const origin = requestUrl.origin
   const next = requestUrl.searchParams.get('next') ?? '/'
+  
+  // Use reusable function to get correct origin (handles Vercel headers)
+  const origin = getOriginFromRequest(request)
 
   if (code) {
     const supabase = createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host') // original origin before Vercel rewrites
-      const isLocalEnv = process.env.NODE_ENV === 'development'
-      if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
-      } else {
-        return NextResponse.redirect(`${origin}${next}`)
-      }
+      // Always use the correct origin from request (handles Vercel rewrites)
+      return NextResponse.redirect(`${origin}${next}`)
     }
   }
 

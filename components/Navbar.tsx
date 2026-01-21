@@ -12,9 +12,19 @@ export default function Navbar() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
-  const supabase = createClient()
 
   useEffect(() => {
+    // Create client only in browser environment
+    let supabase
+    try {
+      supabase = createClient()
+    } catch (error) {
+      // If Supabase is not configured, just set loading to false
+      console.warn('Supabase not configured:', error)
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
@@ -33,24 +43,38 @@ export default function Navbar() {
   }, [])
 
   const handleSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-    if (error) {
-      console.error('Error signing in:', error)
+    try {
+      const supabase = createClient()
+      // In client component, always use window.location.origin
+      // This ensures the callback URL matches the actual domain (including Vercel deployments)
+      const callbackUrl = `${window.location.origin}/auth/callback`
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: callbackUrl,
+        },
+      })
+      if (error) {
+        console.error('Error signing in:', error)
+      }
+    } catch (error) {
+      console.error('Supabase not configured:', error)
     }
   }
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.error('Error signing out:', error)
-    } else {
-      router.push('/')
-      router.refresh()
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        console.error('Error signing out:', error)
+      } else {
+        router.push('/')
+        router.refresh()
+      }
+    } catch (error) {
+      console.error('Supabase not configured:', error)
     }
   }
 

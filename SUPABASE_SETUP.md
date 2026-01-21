@@ -22,9 +22,8 @@
      - `http://localhost:3000` (开发环境)
      - 你的生产环境 URL
    - 在 "Authorized redirect URIs" 添加：
-     - `http://localhost:3000/auth/v1/callback` (开发环境)
-     - `https://<your-project-ref>.supabase.co/auth/v1/callback` (Supabase 回调 URL)
-     - 你的生产环境回调 URL
+     - `https://<your-project-ref>.supabase.co/auth/v1/callback` (Supabase 统一回调 URL，所有环境共用)
+     - ⚠️ 注意：不要添加 `http://localhost:3000/auth/v1/callback`，Supabase 会自动处理所有重定向
 5. 保存 Client ID 和 Client Secret
 
 ### 在 Supabase Dashboard 配置：
@@ -34,7 +33,13 @@
 3. 输入从 Google Cloud Console 获取的：
    - Client ID
    - Client Secret
-4. 保存配置
+4. **重要：配置 Redirect URLs**
+   - 进入项目 Dashboard → Authentication → URL Configuration
+   - 在 "Redirect URLs" 中添加：
+     - `http://localhost:3000/auth/callback` (开发环境)
+     - `https://your-vercel-domain.vercel.app/auth/callback` (生产环境)
+     - `https://your-custom-domain.com/auth/callback` (如果有自定义域名)
+5. 保存配置
 
 ## 3. 配置环境变量
 
@@ -67,7 +72,10 @@ npm run dev
 ## 注意事项
 
 - 确保在 Supabase Dashboard 中正确配置了 Google 提供商的 Client ID 和 Secret
-- 本地开发时，回调 URL 应该是 `http://localhost:3000/auth/v1/callback`
-- 生产环境部署时，需要在 Google Cloud Console 和 Supabase 中添加生产环境的 URL
+- **重要**：必须在 Supabase Dashboard → Authentication → URL Configuration 中添加所有环境的重定向 URL
+  - 开发环境：`http://localhost:3000/auth/callback`
+  - 生产环境：`https://your-vercel-domain.vercel.app/auth/callback`
+- 在 Google Cloud Console 中，只需要添加 Supabase 的统一回调 URL：`https://<your-project-ref>.supabase.co/auth/v1/callback`
+- 如果部署到 Vercel，建议在 Vercel 环境变量中添加 `NEXT_PUBLIC_SITE_URL` 为你的生产域名
 
 

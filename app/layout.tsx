@@ -1,8 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import dynamic from 'next/dynamic'
 import './globals.css'
-import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+
+// Dynamically import Navbar with SSR disabled to avoid Supabase initialization during build
+const Navbar = dynamic(() => import('@/components/Navbar'), {
+  ssr: false,
+})
 
 const inter = Inter({ subsets: ['latin'] })
 

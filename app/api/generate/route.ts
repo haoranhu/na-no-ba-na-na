@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { extractImageFromResponse } from '@/lib/imageUtils'
+import { getSiteUrl } from '@/utils/url'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        'HTTP-Referer': getSiteUrl(),
         'X-Title': 'Nano Banana Image Editor',
       },
       body: JSON.stringify({
