@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FiArrowLeft, FiZap, FiLock, FiImage, FiDownload, FiSparkles } from 'react-icons/fi'
+import { FiArrowLeft, FiZap, FiLock, FiImage, FiDownload, FiStar } from 'react-icons/fi'
 
 export default function FeaturesPage() {
   const features = [
@@ -24,7 +24,7 @@ export default function FeaturesPage() {
       description: 'Support for JPG, PNG, GIF, and WebP formats. Export your edited images in your preferred format.',
     },
     {
-      icon: <FiSparkles className="w-8 h-8" />,
+      icon: <FiStar className="w-8 h-8" />,
       title: 'No Watermarks',
       description: 'Free tier users get watermarked downloads, while premium users enjoy watermark-free high-resolution exports.',
     },
