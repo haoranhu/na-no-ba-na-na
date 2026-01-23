@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FiMenu, FiX, FiImage, FiUser, FiLogOut } from 'react-icons/fi'
+import { FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi'
 import { createClient } from '@/utils/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
@@ -83,9 +83,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
-            <span className="text-2xl">🍌</span>
-            <Link href="/" className="flex items-center space-x-2">
-              <FiImage className="w-6 h-6 text-banana-600" />
+            <Link href="/" className="flex items-center">
               <span className="text-xl font-bold text-gray-900">ImageEditor</span>
             </Link>
           </div>
@@ -108,7 +106,11 @@ export default function Navbar() {
               <div className="w-20 h-8 bg-gray-200 animate-pulse rounded"></div>
             ) : user ? (
               <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-2 text-gray-700">
+                <Link
+                  href="/account"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-banana-600 transition"
+                  title="My Account"
+                >
                   {user.user_metadata?.avatar_url ? (
                     <img
                       src={user.user_metadata.avatar_url}
@@ -123,7 +125,7 @@ export default function Navbar() {
                   <span className="text-sm font-medium">
                     {user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'}
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={handleSignOut}
                   className="flex items-center space-x-1 text-gray-700 hover:text-red-600 transition px-3 py-2 rounded-lg hover:bg-gray-50"
@@ -205,7 +207,11 @@ export default function Navbar() {
               <div className="h-10 bg-gray-200 animate-pulse rounded"></div>
             ) : user ? (
               <>
-                <div className="px-4 py-2 flex items-center space-x-2 text-gray-700">
+                <Link
+                  href="/account"
+                  className="px-4 py-2 flex items-center space-x-2 text-gray-700 hover:bg-banana-50 rounded"
+                  onClick={() => setIsOpen(false)}
+                >
                   {user.user_metadata?.avatar_url ? (
                     <img
                       src={user.user_metadata.avatar_url}
@@ -220,7 +226,7 @@ export default function Navbar() {
                   <span className="text-sm font-medium">
                     {user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'}
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={() => {
                     handleSignOut()

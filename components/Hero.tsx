@@ -71,9 +71,12 @@ export default function Hero() {
             </span>
             <span className="inline-block ml-2">🍌</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
             Powerful, intuitive, and free image editing tools right in your browser.
             No downloads, no sign-ups required.
+          </p>
+          <p className="text-sm text-gray-500 max-w-2xl mx-auto mb-8">
+            Powered by Gemini 2.5 Flash Image. Our platform offers a user-friendly interface built on top of advanced AI models to enhance usability and provide additional features. We are an independent service and not affiliated with Google.
           </p>
         </div>
 

@@ -99,7 +99,7 @@ export default function FAQ() {
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-4">Still have questions?</p>
           <a
-            href="mailto:support@imgeditor.co"
+            href="mailto:fufu@nanobananaco.online"
             className="inline-flex items-center space-x-2 text-banana-600 hover:text-banana-700 font-semibold"
           >
             <span>Contact our support team</span>

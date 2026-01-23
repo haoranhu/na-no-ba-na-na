@@ -15,8 +15,11 @@ export default function PricingPage() {
             <span className="text-banana-700">Pricing</span>
             <span className="inline-block ml-2">🍌</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
             Choose the perfect plan for your needs. Upgrade or downgrade at any time.
+          </p>
+          <p className="text-sm text-gray-500 max-w-2xl mx-auto">
+            Powered by Gemini 2.5 Flash Image. Independent service, not affiliated with Google.
           </p>
         </div>
         

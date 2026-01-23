@@ -12,8 +12,8 @@ const Navbar = dynamic(() => import('@/components/Navbar'), {
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Image Editor - Professional Photo Editing Online',
-  description: 'Edit your images online with our powerful and easy-to-use image editor. Upload, edit, and enhance your photos instantly.',
+  title: 'Image Editor - Professional Photo Editing Online | Powered by Gemini 2.5 Flash Image',
+  description: 'Edit your images online with our powerful and easy-to-use image editor powered by Gemini 2.5 Flash Image. Upload, edit, and enhance your photos instantly. Independent service, not affiliated with Google.',
 }
 
 export default function RootLayout({
